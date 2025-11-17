@@ -1,13 +1,20 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import ScrollToTop from "@/components/ScrollToTop";
 
-export const metadata: Metadata = {
-  title: "Timeless Touch Ceramics - Premium Tiles and Natural Stones",
-  description:
-    "Premium tiles and natural stones for spaces that inspire. Quality craftsmanship since 2023.",
-};
+import { Inter, Krub } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-inter",
+});
+
+const krub = Krub({
+  subsets: ["latin"],
+  variable: "--font-krub",
+  weight: ["500", "700"],
+});
 
 export default function RootLayout({
   children,
@@ -16,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className={`antialiased ${inter.variable} ${krub.variable}`}>
         <Providers>{children}</Providers>
         <ScrollToTop />
       </body>

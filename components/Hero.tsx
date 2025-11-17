@@ -89,7 +89,7 @@ export default function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild variant="dark">
+            <Button asChild>
               <Link href="/products">Explore Products</Link>
             </Button>
             <Button asChild variant="outline">
