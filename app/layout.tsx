@@ -4,16 +4,16 @@ import { Providers } from "@/components/providers";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Metadata } from "next";
 
-import { Inter, Krub } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import Footer from "@/components/Footer";
 
-const fontPrimary = Inter({
+const fontPrimary = Geist({
   subsets: ["latin"],
   weight: ["400", "600"],
   variable: "--font-primary",
 });
 
-const fontSecondary = Krub({
+const fontSecondary = Inter({
   subsets: ["latin"],
   variable: "--font-secondary",
   weight: ["500", "700"],

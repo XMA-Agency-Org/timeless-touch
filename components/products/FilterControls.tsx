@@ -8,7 +8,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
-import { categories, finishes } from "@/lib/products-data";
 
 interface FilterControlsProps {
   selectedCategories: string[];
@@ -22,6 +21,8 @@ interface FilterControlsProps {
   onClearAll: () => void;
   getCategoryCount: (category: string) => number;
   getFinishCount: (finish: string) => number;
+  categories: string[];
+  finishes: string[];
   isMobile?: boolean;
 }
 
@@ -39,6 +40,8 @@ export default function FilterControls({
   onClearAll,
   getCategoryCount,
   getFinishCount,
+  categories,
+  finishes,
   isMobile = false,
 }: FilterControlsProps) {
   const totalActiveFilters =

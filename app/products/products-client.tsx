@@ -26,12 +26,21 @@ import QuickViewModal from "@/components/QuickViewModal";
 import FilterControls from "@/components/products/FilterControls";
 import ProductCard from "@/components/products/ProductCard";
 import Pagination from "@/components/products/Pagination";
-import { products, categories, finishes } from "@/lib/products-data";
 import { Product, SortOption } from "@/lib/types";
 
 const ITEMS_PER_PAGE = 9;
 
-export default function ProductsContent() {
+interface ProductsClientProps {
+  initialProducts: Product[];
+  categories: string[];
+  finishes: string[];
+}
+
+export default function ProductsClient({
+  initialProducts,
+  categories,
+  finishes,
+}: ProductsClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -84,22 +93,22 @@ export default function ProductsContent() {
     setCurrentPage(1);
   }, [selectedCategories, selectedFinishes, sortBy]);
 
-  // Filter counts
+  // Filter counts - now uses props instead of imported data
   const getCategoryCount = useCallback(
     (category: string) => {
-      return products.filter((p) => {
+      return initialProducts.filter((p) => {
         const matchesCategory = p.category === category;
         const matchesFinish =
           selectedFinishes.length === 0 || selectedFinishes.includes(p.finish);
         return matchesCategory && matchesFinish;
       }).length;
     },
-    [selectedFinishes]
+    [initialProducts, selectedFinishes]
   );
 
   const getFinishCount = useCallback(
     (finish: string) => {
-      return products.filter((p) => {
+      return initialProducts.filter((p) => {
         const matchesFinish = p.finish === finish;
         const matchesCategory =
           selectedCategories.length === 0 ||
@@ -107,12 +116,12 @@ export default function ProductsContent() {
         return matchesFinish && matchesCategory;
       }).length;
     },
-    [selectedCategories]
+    [initialProducts, selectedCategories]
   );
 
   // Filtered and sorted products
   const filteredProducts = useMemo(() => {
-    let filtered = products;
+    let filtered = initialProducts;
 
     if (selectedCategories.length > 0) {
       filtered = filtered.filter((p) => selectedCategories.includes(p.category));
@@ -132,7 +141,7 @@ export default function ProductsContent() {
     });
 
     return sorted;
-  }, [selectedCategories, selectedFinishes, sortBy]);
+  }, [initialProducts, selectedCategories, selectedFinishes, sortBy]);
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
