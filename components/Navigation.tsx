@@ -212,8 +212,8 @@ const Navigation = () => {
               <Search className="h-4 w-4" />
               Search
             </button>
-            <Button asChild variant="light" className="hidden lg:block">
-              <Link href="/contact">Get in touch</Link>
+            <Button asChild variant="secondary" className="hidden lg:block">
+              <Link href="/contact">Get In Touch</Link>
             </Button>
           </div>
 

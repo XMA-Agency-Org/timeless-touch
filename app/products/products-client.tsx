@@ -6,6 +6,7 @@ import {
   useEffect,
   useCallback,
   useTransition,
+  useRef,
 } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -74,6 +75,7 @@ export default function ProductsClient({
     null,
   );
   const [quickViewOpen, setQuickViewOpen] = useState(false);
+  const scrollTargetRef = useRef<HTMLDivElement>(null);
 
   // URL sync - only update URL when state changes, not on mount
   const updateURL = useCallback(
@@ -205,7 +207,14 @@ export default function ProductsClient({
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Scroll to the scroll target with smooth behavior
+    // Using requestAnimationFrame to ensure DOM has updated
+    requestAnimationFrame(() => {
+      scrollTargetRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
   };
 
   const handleQuickView = (product: Product, e: React.MouseEvent) => {
@@ -219,7 +228,7 @@ export default function ProductsClient({
     selectedCategories.length + selectedFinishes.length;
 
   return (
-    <div className="bg-neutral-50">
+    <div ref={scrollTargetRef} className="bg-neutral-50">
       <section className="section">
         <div className="container">
           <Breadcrumb items={[{ label: "Products" }]} />

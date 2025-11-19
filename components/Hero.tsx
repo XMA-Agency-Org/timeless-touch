@@ -70,7 +70,7 @@ export default function Hero() {
                   <span className="ml-2">→</span>
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outlineLight" size="lg">
                 <Link href="/contact">Get Consultation</Link>
               </Button>
             </div>

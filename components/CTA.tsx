@@ -65,7 +65,7 @@ export default function CTA() {
                 <Button asChild variant="secondary">
                   <Link href="/products">Browse Products</Link>
                 </Button>
-                <Button asChild variant="outline">
+                <Button asChild variant="outlineLight">
                   <Link href="/contact">Schedule Consultation</Link>
                 </Button>
               </motion.div>
