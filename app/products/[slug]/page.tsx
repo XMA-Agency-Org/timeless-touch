@@ -21,6 +21,7 @@ import { MessageCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
 import ProductCard from "@/components/products/ProductCard";
 import { products } from "@/lib/products-data";
+import { getSimilarProducts } from "@/lib/utils/product-similarity";
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -36,10 +37,8 @@ export default function ProductDetail() {
     notFound();
   }
 
-  // Get similar products (same category, excluding current)
-  const similarProducts = products
-    .filter((p) => p.category === product.category && p.slug !== product.slug)
-    .slice(0, 3);
+  // Get similar products using weighted scoring algorithm
+  const similarProducts = getSimilarProducts(product, products, 6);
 
   // Sync carousel state with thumbnail selection
   useEffect(() => {
@@ -89,8 +88,8 @@ export default function ProductDetail() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-4" />
-                <CarouselNext className="right-4" />
+                <CarouselPrevious variant="light" className="left-4" />
+                <CarouselNext variant="light" className="right-4" />
               </Carousel>
 
               {/* Thumbnail navigation */}
@@ -209,15 +208,26 @@ export default function ProductDetail() {
           {similarProducts.length > 0 && (
             <div>
               <h2 className="title-subsection mb-8">Similar Products</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {similarProducts.map((item) => (
-                  <ProductCard
-                    key={item.slug}
-                    product={item}
-                    showActions={false}
-                  />
-                ))}
-              </div>
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: false,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-4">
+                  {similarProducts.map((item) => (
+                    <CarouselItem
+                      key={item.slug}
+                      className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/4"
+                    >
+                      <ProductCard product={item} showActions={false} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious variant="light" size="lg" className="-left-4 shadow-sm shadow-primary-700" />
+                <CarouselNext variant="light" size="lg" className="-right-4 shadow-sm shadow-primary-700"  />
+              </Carousel>
             </div>
           )}
         </div>

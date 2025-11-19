@@ -46,8 +46,8 @@ export default function ProductCard({
               </div>
             )}
           </AspectRatio>
-          <CardContent>
-            <CardTitle>{product.name}</CardTitle>
+          <CardContent className="p-4">
+            <CardTitle className="text-xl">{product.name}</CardTitle>
             <CardDescription>
               {capitalize(product.category)} • {capitalize(product.finish)}
             </CardDescription>

@@ -298,6 +298,57 @@ useEffect(() => {
 - Active thumbnail indicator
 - Synced state between carousel and thumbnails
 
+### Similar Products Algorithm
+
+The product detail page includes a "Similar Products" section that uses a weighted multi-factor scoring algorithm to recommend relevant products.
+
+**Implementation**: `/lib/utils/product-similarity.ts`
+
+**Scoring Breakdown**:
+- **Category match (40 points)**: Highest priority. Customers browsing marble products want to see other marble products.
+- **Finish match (30 points)**: Surface finish is critical for tiles/stone (polished vs honed vs textured). Visual consistency matters.
+- **Price range match (20 points)**: Products within ±20% price range. Helps customers stay within budget. Score scales based on proximity.
+- **Randomization (10 points)**: Adds variety to prevent showing the same products every time.
+
+**Algorithm**:
+```typescript
+function calculateSimilarity(product: Product, candidate: Product): number {
+  let score = 0;
+
+  // Category match (40 points)
+  if (product.category === candidate.category) score += 40;
+
+  // Finish match (30 points)
+  if (product.finish === candidate.finish) score += 30;
+
+  // Price range (20 points, scaled by proximity)
+  const priceDifference = Math.abs(product.price - candidate.price);
+  const priceRange = product.price * 0.2; // ±20%
+  if (priceDifference <= priceRange) {
+    const priceProximity = 1 - (priceDifference / priceRange);
+    score += 20 * priceProximity;
+  }
+
+  // Random factor (10 points) for variety
+  score += Math.random() * 10;
+
+  return score;
+}
+```
+
+**Display**:
+- Shows up to 6 similar products
+- Responsive grid: 2 columns (mobile) → 3 columns (tablet) → 6 columns (desktop XL)
+- Products sorted by similarity score (highest first)
+- Excludes the current product from results
+
+**Why This Approach**:
+- Content-based filtering (no user behavior data needed)
+- Works immediately with existing product catalog
+- Prioritizes business-relevant attributes (category, finish, price)
+- Balances relevance with variety through randomization
+- Easy to adjust weights based on user feedback
+
 ## Future Enhancements
 
 1. Server-side filtering for large catalogs
