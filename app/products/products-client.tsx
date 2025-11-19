@@ -68,7 +68,7 @@ export default function ProductsClient({
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
 
-  // URL sync
+  // URL sync - only update URL when state changes, not on mount
   const updateURL = useCallback(
     (cats: string[], fins: string[], sort: string, page: number) => {
       const params = new URLSearchParams();
@@ -80,17 +80,39 @@ export default function ProductsClient({
       const newURL = params.toString()
         ? `${pathname}?${params.toString()}`
         : pathname;
-      router.replace(newURL, { scroll: false });
+
+      // Only update if URL is different
+      const currentURL = `${pathname}${window.location.search}`;
+      if (newURL !== currentURL) {
+        router.replace(newURL, { scroll: false });
+      }
     },
     [pathname, router]
   );
 
+  // Sync state changes to URL
   useEffect(() => {
     updateURL(selectedCategories, selectedFinishes, sortBy, currentPage);
   }, [selectedCategories, selectedFinishes, sortBy, currentPage, updateURL]);
 
+  // Reset to page 1 when filters or sort change (but not on initial mount)
   useEffect(() => {
-    setCurrentPage(1);
+    const cats = searchParams.get("categories");
+    const fins = searchParams.get("finishes");
+    const sort = searchParams.get("sort") || "name";
+
+    // Only reset page if this is not the initial mount (check if current state matches URL)
+    const catsArray = cats ? cats.split(",") : [];
+    const finsArray = fins ? fins.split(",") : [];
+
+    const isInitialMount =
+      JSON.stringify(catsArray) === JSON.stringify(selectedCategories) &&
+      JSON.stringify(finsArray) === JSON.stringify(selectedFinishes) &&
+      sort === sortBy;
+
+    if (!isInitialMount && currentPage !== 1) {
+      setCurrentPage(1);
+    }
   }, [selectedCategories, selectedFinishes, sortBy]);
 
   // Filter counts - now uses props instead of imported data
