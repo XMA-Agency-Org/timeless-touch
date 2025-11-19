@@ -1,16 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Breadcrumb from "@/components/Breadcrumb";
+import FeaturesCard from "@/components/FeaturesCard";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -53,10 +52,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Email Us",
-      details: [
-        "info@timelesstouch.com",
-        "sales@timelesstouch.com",
-      ],
+      details: ["info@timelesstouch.com", "sales@timelesstouch.com"],
     },
     {
       icon: Clock,
@@ -67,7 +63,10 @@ export default function Contact() {
 
   return (
     <div className="bg-neutral-50">
-      <section className="section">
+      <div className="container pt-8">
+        <Breadcrumb items={[{ label: "Contact" }]} />
+      </div>
+      <section className="section pt-12">
         <div className="container">
           <div className="text-center mb-12">
             <h1 className="title-section">Get In Touch</h1>
@@ -77,33 +76,26 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {contactInfo.map((info) => (
-              <Card key={info.title}>
-                <CardContent>
-                  <Avatar>
-                    <AvatarFallback>
-                      <info.icon className="text-primary-500" />
-                    </AvatarFallback>
-                  </Avatar>
-                  <CardTitle>{info.title}</CardTitle>
-                  <div className="flex flex-col gap-1">
-                    {info.details.map((detail) => (
-                      <p key={detail} className="text-body">
-                        {detail}
-                      </p>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <FeaturesCard
+                key={info.title}
+                icon={info.icon}
+                title={info.title}
+                description={info.details.join("\n")}
+                variant="vertical"
+              />
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <Card>
-              <CardContent>
-                <CardTitle>Send Us a Message</CardTitle>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+            <Card className="bg-white shadow-sm h-full flex flex-col border-0 rounded-md">
+              <CardContent className="flex-1 flex flex-col">
+                <CardTitle className="mb-6">Send Us a Message</CardTitle>
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-4 flex-1"
+                >
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="name">Name *</Label>
                     <Input
@@ -159,20 +151,19 @@ export default function Contact() {
               </CardContent>
             </Card>
 
-            <AspectRatio ratio={1} className="relative overflow-hidden">
-              <Image
-                src="/images/sansam-mobile-slider2.jpg"
-                alt="Showroom"
-                fill
-                className="object-cover"
+            <div className="relative w-full h-full overflow-hidden rounded-md">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178509744622!2d55.2708!3d25.2048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24d%3A0xff45e502e1ceb7e2!2sDubai!5e0!3m2!1sen!2sae!4v1234567890123!5m2!1sen!2sae"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 w-full h-full"
+                title="Dubai Location Map"
               />
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-neutral-950/40">
-                <MapPin className="text-primary-500 mb-4" />
-                <p className="text-body text-neutral-50">
-                  Visit our showroom to see our full collection
-                </p>
-              </div>
-            </AspectRatio>
+            </div>
           </div>
         </div>
       </section>

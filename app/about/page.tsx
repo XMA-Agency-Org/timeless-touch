@@ -1,14 +1,10 @@
 import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Award, Users, Globe, Heart } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
+import FeaturesCard from "@/components/FeaturesCard";
+import FAQ from "@/components/FAQ";
 
 export default function About() {
   const values = [
@@ -45,17 +41,46 @@ export default function About() {
     },
     { year: "2024", event: "Expanded to 5 showrooms across the region" },
     { year: "2025", event: "Reached milestone of 10,000 satisfied customers" },
+  ];
+
+  const faqItems = [
     {
-      year: "2026",
-      event: "Leading provider of premium tiles and natural stones",
+      question: "What types of materials do you offer?",
+      answer:
+        "We offer a wide range of premium natural stones including marble, granite, travertine, limestone, and quartzite, as well as high-quality ceramic and porcelain tiles. All materials are sourced directly from trusted quarries and manufacturers worldwide.",
+    },
+    {
+      question: "Do you provide installation services?",
+      answer:
+        "Yes, we work with a network of certified installers who specialize in natural stone and tile installation. We can connect you with experienced professionals in your area to ensure your project is completed to the highest standards.",
+    },
+    {
+      question: "Can I visit your showroom to see samples?",
+      answer:
+        "Absolutely! We have multiple showrooms across the region where you can view our extensive collection of materials in person. Our showrooms feature full-size displays and sample areas to help you visualize your project. Please contact us to schedule a visit.",
+    },
+    {
+      question: "What is your return policy?",
+      answer:
+        "We offer a flexible return policy on unused materials within 30 days of purchase, provided they are in their original packaging and condition. Custom orders and cut materials are non-returnable. Please contact our customer service team for specific return arrangements.",
+    },
+    {
+      question: "How do I calculate how much material I need?",
+      answer:
+        "Our team can help you calculate the exact amount of material needed for your project. Simply provide us with your room dimensions and layout, and we'll provide a detailed quote including recommended quantities with a small buffer for cuts and waste. We also offer free consultations for larger projects.",
     },
   ];
 
   return (
     <div className="bg-neutral-50">
-      <section className="section bg-neutral-200">
+      <div className="container pt-8">
+        <Breadcrumb items={[{ label: "About Us" }]} />
+      </div>
+      <section className="section-darker">
         <div className="container text-center">
-          <h1 className="title-hero">About Timeless Touch Ceramics</h1>
+          <h1 className="title-hero text-neutral-950">
+            About Timeless Touch Ceramics
+          </h1>
           <p className="text-body">
             3 years of excellence in providing premium tiles and natural stones
             for spaces that inspire.
@@ -99,7 +124,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section bg-neutral-200">
+      <section className="section-darker">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="title-section">Our Values</h2>
@@ -110,17 +135,13 @@ export default function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value) => (
-              <Card key={value.title}>
-                <CardContent>
-                  <Avatar>
-                    <AvatarFallback>
-                      <value.icon className="text-primary-500" />
-                    </AvatarFallback>
-                  </Avatar>
-                  <CardTitle>{value.title}</CardTitle>
-                  <CardDescription>{value.description}</CardDescription>
-                </CardContent>
-              </Card>
+              <FeaturesCard
+                key={value.title}
+                icon={value.icon}
+                title={value.title}
+                variant="vertical"
+                description={value.description}
+              />
             ))}
           </div>
         </div>
@@ -148,6 +169,8 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <FAQ items={faqItems} />
     </div>
   );
 }

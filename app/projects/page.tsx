@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function Projects() {
   const projects = [
@@ -71,7 +72,10 @@ export default function Projects() {
 
   return (
     <div className="bg-neutral-50">
-      <section className="section">
+      <div className="container pt-8">
+        <Breadcrumb items={[{ label: "Projects" }]} />
+      </div>
+      <section className="section pt-12">
         <div className="container">
           <div className="text-center mb-12">
             <h1 className="title-section">Our Projects</h1>
@@ -84,7 +88,10 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
               <Card key={project.id}>
-                <AspectRatio ratio={4 / 3} className="relative overflow-hidden">
+                <AspectRatio
+                  ratio={4 / 3}
+                  className="relative overflow-hidden rounded-t-lg"
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
