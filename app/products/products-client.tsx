@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback, useTransition } from "react";
+import {
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+  useTransition,
+} from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -46,7 +52,6 @@ export default function ProductsClient({
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
-  // State
   const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
     const cats = searchParams.get("categories");
     return cats ? cats.split(",") : [];
@@ -65,7 +70,9 @@ export default function ProductsClient({
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(true);
   const [finishOpen, setFinishOpen] = useState(true);
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
+    null,
+  );
   const [quickViewOpen, setQuickViewOpen] = useState(false);
 
   // URL sync - only update URL when state changes, not on mount
@@ -87,7 +94,7 @@ export default function ProductsClient({
         router.replace(newURL, { scroll: false });
       }
     },
-    [pathname, router]
+    [pathname, router],
   );
 
   // Sync state changes to URL
@@ -125,7 +132,7 @@ export default function ProductsClient({
         return matchesCategory && matchesFinish;
       }).length;
     },
-    [initialProducts, selectedFinishes]
+    [initialProducts, selectedFinishes],
   );
 
   const getFinishCount = useCallback(
@@ -138,7 +145,7 @@ export default function ProductsClient({
         return matchesFinish && matchesCategory;
       }).length;
     },
-    [initialProducts, selectedCategories]
+    [initialProducts, selectedCategories],
   );
 
   // Filtered and sorted products
@@ -146,7 +153,9 @@ export default function ProductsClient({
     let filtered = initialProducts;
 
     if (selectedCategories.length > 0) {
-      filtered = filtered.filter((p) => selectedCategories.includes(p.category));
+      filtered = filtered.filter((p) =>
+        selectedCategories.includes(p.category),
+      );
     }
 
     if (selectedFinishes.length > 0) {
@@ -177,7 +186,7 @@ export default function ProductsClient({
     setSelectedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((c) => c !== category)
-        : [...prev, category]
+        : [...prev, category],
     );
   };
 
@@ -185,7 +194,7 @@ export default function ProductsClient({
     setSelectedFinishes((prev) =>
       prev.includes(finish)
         ? prev.filter((f) => f !== finish)
-        : [...prev, finish]
+        : [...prev, finish],
     );
   };
 
@@ -195,10 +204,8 @@ export default function ProductsClient({
   };
 
   const goToPage = (page: number) => {
-    startTransition(() => {
-      setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleQuickView = (product: Product, e: React.MouseEvent) => {
@@ -208,7 +215,8 @@ export default function ProductsClient({
     setQuickViewOpen(true);
   };
 
-  const totalActiveFilters = selectedCategories.length + selectedFinishes.length;
+  const totalActiveFilters =
+    selectedCategories.length + selectedFinishes.length;
 
   return (
     <div className="bg-neutral-50">
@@ -219,7 +227,8 @@ export default function ProductsClient({
           <div className="mb-8">
             <h1 className="title-section">Our Products</h1>
             <p className="text-body">
-              Browse our extensive collection of premium tiles and natural stones
+              Browse our extensive collection of premium tiles and natural
+              stones
             </p>
           </div>
 
@@ -251,7 +260,10 @@ export default function ProductsClient({
             <div className="lg:col-span-3">
               {/* Controls Bar */}
               <div className="flex items-center justify-between mb-4 gap-4">
-                <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+                <Sheet
+                  open={mobileFiltersOpen}
+                  onOpenChange={setMobileFiltersOpen}
+                >
                   <SheetTrigger asChild>
                     <Button variant="outline" className="lg:hidden relative">
                       <SlidersHorizontal className="h-4 w-4 mr-2" />
@@ -297,7 +309,10 @@ export default function ProductsClient({
                   <span className="text-sm text-neutral-600 hidden sm:block">
                     Sort by:
                   </span>
-                  <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                  <Select
+                    value={sortBy}
+                    onValueChange={(v) => setSortBy(v as SortOption)}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
@@ -305,8 +320,12 @@ export default function ProductsClient({
                       <SelectItem value="name">Name (A-Z)</SelectItem>
                       <SelectItem value="name-desc">Name (Z-A)</SelectItem>
                       <SelectItem value="newest">Newest</SelectItem>
-                      <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                      <SelectItem value="price-desc">Price: High to Low</SelectItem>
+                      <SelectItem value="price-asc">
+                        Price: Low to High
+                      </SelectItem>
+                      <SelectItem value="price-desc">
+                        Price: High to Low
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -318,13 +337,7 @@ export default function ProductsClient({
               </p>
 
               {/* Product Grid */}
-              {isPending ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-                    <ProductCardSkeleton key={i} />
-                  ))}
-                </div>
-              ) : filteredProducts.length > 0 ? (
+              {filteredProducts.length > 0 ? (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     {paginatedProducts.map((product) => (
@@ -344,8 +357,11 @@ export default function ProductsClient({
 
                   <p className="text-center text-sm text-neutral-600 mt-4">
                     Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}-
-                    {Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)} of{" "}
-                    {filteredProducts.length} products
+                    {Math.min(
+                      currentPage * ITEMS_PER_PAGE,
+                      filteredProducts.length,
+                    )}{" "}
+                    of {filteredProducts.length} products
                   </p>
                 </>
               ) : (
@@ -355,7 +371,8 @@ export default function ProductsClient({
                   </div>
                   <h3 className="title-subsection mb-2">No products found</h3>
                   <p className="text-body text-neutral-600 mb-4">
-                    Try adjusting your filters to find what you&apos;re looking for.
+                    Try adjusting your filters to find what you&apos;re looking
+                    for.
                   </p>
                   <Button variant="outline" onClick={clearAllFilters}>
                     Clear All Filters
