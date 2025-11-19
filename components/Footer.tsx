@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="container section-sm">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <Logo variant="dark" className="mb-4" />
+            <Logo variant="dark" className="w-56 mb-4" />
             <p className="footer-text mb-6">
               Premium tiles and natural stones for spaces that inspire. Quality
               craftsmanship since 2023.

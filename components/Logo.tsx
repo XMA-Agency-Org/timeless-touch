@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import LogoImageDark from "@/public/logo/logo-dark.png";
+import LogoImageLight from "@/public/logo/logo-light.png";
 
 interface LogoProps {
   className?: string;
@@ -7,15 +10,21 @@ interface LogoProps {
 }
 
 export default function Logo({ className, variant = "light" }: LogoProps) {
-  const textColor =
-    variant === "light" ? "text-neutral-50" : "text-neutral-950";
-
   return (
     <Link href="/" className={cn("flex flex-col", className)}>
-      <div className={cn("font-serif text-xl", textColor)}>Timeless Touch</div>
-      <div className={cn("text-xs uppercase tracking-[.95em]", textColor)}>
-        CERAMICS
-      </div>
+      {variant === "light" ? (
+        <Image
+          src={LogoImageLight}
+          alt="Timeless Touch Ceramics - Logo"
+          className="w-full h-full"
+        />
+      ) : (
+        <Image
+          src={LogoImageDark}
+          alt="Timeless Touch Ceramics - Logo"
+          className={cn("w-full h-full")}
+        />
+      )}
     </Link>
   );
 }
