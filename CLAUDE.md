@@ -120,6 +120,7 @@ export default function Component({ data, onAction }: ComponentProps) {
 - Use Tailwind utilities with design system tokens
 - Avoid `overflow-hidden` with sticky positioning (breaks sticky behavior)
 - Never add ambient glow for decoration
+- Borders on the gold header/mobile menu use a soft light tint (`border-neutral-50/20`), never dark neutrals like `neutral-800`; the same goes for icons on it (the mobile menu close button is set to `text-neutral-50` through `SheetContent`'s `closeButtonClassName` prop)
 - Use CVA (class-variance-authority) for component variants
 - Mobile-first responsive design with breakpoint overrides
 - Consistent hover/focus states for interactive elements

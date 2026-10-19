@@ -47,7 +47,7 @@ const Navigation = ({ collections, catalogues }: NavigationProps) => {
         path === "/" ? "fixed" : "sticky"
       } top-0  left-0 right-0 transition-all duration-300 ease-in-out border-b will-change-[background-color,border-color] ${
         isScrolled || path !== "/"
-          ? "bg-primary-500/85 backdrop-blur-sm border-neutral-800"
+          ? "bg-primary-500/85 backdrop-blur-sm border-neutral-50/20"
           : "bg-transparent border-transparent"
       }`}
     >
@@ -98,7 +98,8 @@ const Navigation = ({ collections, catalogues }: NavigationProps) => {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetContent
             side="right"
-            className="w-full sm:max-w-sm bg-primary-500/60 backdrop-blur-xs border-neutral-800"
+            className="w-full sm:max-w-sm bg-primary-500/60 backdrop-blur-xs border-neutral-50/20"
+            closeButtonClassName="text-neutral-50 hover:bg-neutral-50/10 focus:ring-neutral-50"
           >
             <SheetHeader className="border-b border-neutral-50/20 pb-4">
               <SheetTitle className="text-neutral-50 text-left">
