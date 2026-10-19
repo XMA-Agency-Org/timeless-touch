@@ -4,7 +4,7 @@ import CollectionsServer from "@/components/CollectionsServer";
 import AboutStory from "@/components/AboutStory";
 import CTA from "@/components/CTA";
 import { Showcase } from "@/components/Showcase";
-import { PhotoGallerySkiper } from "@/components/PhotoGallerySkiper";
+import PhotoGallery from "@/components/gallery/PhotoGallery";
 import Blockquote from "@/components/Blockquote";
 import MapSection from "@/components/MapSection";
 
@@ -37,7 +37,7 @@ export default function Home() {
       <AboutStory />
       <Showcase />
       <Blockquote />
-      <PhotoGallerySkiper />
+      <PhotoGallery />
       <CTA />
       <MapSection />
     </div>

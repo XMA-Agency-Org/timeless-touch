@@ -44,3 +44,18 @@ export type SortOption =
   | "newest"
   | "price-asc"
   | "price-desc";
+
+export type GalleryRowDirection = "left" | "right";
+
+export interface GalleryRowConfig {
+  images: string[];
+  direction: GalleryRowDirection;
+  travelShareOfVisibleWidth: number;
+  staggerShareOfVisibleWidth: number;
+}
+
+export interface GalleryColumnConfig {
+  images: string[];
+  startOffsetPercent: number;
+  travelInViewportHeights: number;
+}

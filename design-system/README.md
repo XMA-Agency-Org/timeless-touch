@@ -8,7 +8,8 @@ A minimal design system built on Tailwind CSS with custom tokens.
 tokens/
 ├── colors.css      # Color tokens
 ├── typography.css  # Font tokens
-└── shadows.css     # Shadow tokens
+├── shadows.css     # Shadow tokens
+└── gallery.css     # Photo gallery spacing, tile size, vignette
 
 components/
 └── layout.css      # Layout & typography utilities
@@ -27,6 +28,12 @@ All tokens are defined in `@theme` and generate Tailwind utilities used by shadc
 ### Shadows
 
 - `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`, `shadow-2xl`
+
+### Gallery
+
+- `gap-gallery` / `py-gallery` (`--spacing-gallery`), `gap-gallery-wide` / `p-gallery-wide` (`--spacing-gallery-wide`)
+- `--gallery-row-tile-height`, `--gallery-vignette-rows`, `--gallery-vignette-columns`
+- See `/docs/photo-gallery.md`
 
 ## Usage
 

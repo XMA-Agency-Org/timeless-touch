@@ -1,0 +1,16 @@
+/* Photo gallery tokens - generates gap/padding utilities (gap-gallery, py-gallery, gap-gallery-wide) */
+@theme {
+  --spacing-gallery: clamp(0.5rem, 2.5vw, 1rem);
+  --spacing-gallery-wide: 2vw;
+}
+
+:root {
+  --gallery-row-tile-height: clamp(9rem, 26svh, 17rem);
+  --gallery-vignette-color: oklch(from var(--color-neutral-950) l c h / 0.22);
+  --gallery-vignette-rows:
+    inset 0 0.75rem 1rem -0.5rem var(--gallery-vignette-color),
+    inset 0 -0.75rem 1rem -0.5rem var(--gallery-vignette-color);
+  --gallery-vignette-columns:
+    inset 0 0.625rem 0.625rem 1.875rem var(--gallery-vignette-color),
+    inset 0 -0.625rem 0.625rem 1.875rem var(--gallery-vignette-color);
+}

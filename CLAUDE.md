@@ -120,6 +120,8 @@ export default function Component({ data, onAction }: ComponentProps) {
 - Use Tailwind utilities with design system tokens
 - Avoid `overflow-hidden` with sticky positioning (breaks sticky behavior)
 - Never add ambient glow for decoration
+- Scroll parallax rows must alternate direction and keep their edges covered on every viewport; measure the track instead of hardcoding offsets (see `/docs/photo-gallery.md`)
+- Don't feed ResizeObserver measurements into Motion values read by `useTransform(() => ...)`. It didn't recompute in framer-motion 12.23. Keep measurements in React state.
 - Borders on the gold header/mobile menu use a soft light tint (`border-neutral-50/20`), never dark neutrals like `neutral-800`; the same goes for icons on it (the mobile menu close button is set to `text-neutral-50` through `SheetContent`'s `closeButtonClassName` prop)
 - Use CVA (class-variance-authority) for component variants
 - Mobile-first responsive design with breakpoint overrides
@@ -149,6 +151,7 @@ Design system documentation: `/design-system/README.md`
 
 - `/docs/products-architecture.md` - Products page filtering, sorting, pagination patterns
 - `/docs/component-patterns.md` - Component organization and coding conventions
+- `/docs/photo-gallery.md` - Home page parallax gallery (mobile rows / desktop columns), tuning and gotchas
 - `/design-system/README.md` - Design tokens and styling guidelines
 
 ## Data Patterns
